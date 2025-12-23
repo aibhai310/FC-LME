@@ -1,0 +1,485 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #34495e;
+    --success-color: #2ecc71;
+    --uae-green: #008753;
+    --uae-red: #ce1126;
+    --uae-black: #000000;
+    --uae-white: #FFFFFF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Password Protection Styles */
+#password-protection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--uae-green) 0%, var(--uae-red) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: white;
+}
+
+.password-box {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    text-align: center;
+    color: var(--dark-color);
+    max-width: 450px;
+    width: 90%;
+}
+
+.password-box h2 {
+    margin-bottom: 15px;
+    color: var(--uae-green);
+    font-size: 28px;
+}
+
+.password-box p {
+    margin-bottom: 25px;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+.password-input {
+    width: 100%;
+    padding: 15px;
+    margin: 20px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+.password-input:focus {
+    border-color: var(--uae-green);
+    outline: none;
+}
+
+.password-btn {
+    background: var(--uae-green);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.password-btn:hover {
+    background: #006b41;
+}
+
+.error-message {
+    color: var(--uae-red);
+    margin-top: 15px;
+    display: none;
+    font-weight: 600;
+}
+
+/* Hide main content initially */
+.container {
+    display: none;
+}
+
+/* Your existing styles */
+body {
+    background-color: #f5f7fa;
+    color: var(--dark-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background: linear-gradient(135deg, var(--uae-green) 0%, var(--uae-red) 100%);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-content {
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.currency-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.aed-currency {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.app-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.input-section, .results-section {
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light-color);
+    color: var(--primary-color);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-group input {
+    width: auto;
+}
+
+.btn {
+    background-color: var(--uae-green);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+.btn:hover {
+    background-color: #006b41;
+}
+
+.btn-print {
+    background-color: var(--secondary-color);
+    margin-bottom: 15px;
+}
+
+.btn-print:hover {
+    background-color: #2980b9;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.result-card {
+    background-color: var(--light-color);
+    padding: 15px;
+    border-radius: 6px;
+    text-align: center;
+    border-left: 4px solid var(--uae-green);
+}
+
+.result-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 10px 0;
+}
+
+.result-label {
+    font-size: 0.9rem;
+    color: var(--dark-color);
+}
+
+.breakdown-section {
+    margin-top: 25px;
+}
+
+.breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.breakdown-table th, .breakdown-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.breakdown-table th {
+    background-color: var(--light-color);
+    font-weight: 600;
+}
+
+.highlight {
+    background-color: rgba(52, 152, 219, 0.1);
+    font-weight: 600;
+}
+
+.total-row {
+    font-weight: 700;
+    font-size: 1.1rem;
+    background-color: rgba(0, 135, 83, 0.1);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    color: var(--dark-color);
+    font-size: 0.9rem;
+}
+
+.cost-breakdown {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+.cost-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #ddd;
+}
+
+.cost-item:last-child {
+    border-bottom: none;
+}
+
+.cost-label {
+    font-weight: 600;
+}
+
+.cost-value {
+    font-weight: 600;
+    color: var(--uae-green);
+}
+
+.note {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.post-details {
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+.post-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.post-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.post-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-input-group label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.post-summary {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.no-print {
+    display: block;
+}
+
+/* Collapsible sections */
+.collapsible {
+    margin-top: 15px;
+}
+
+.collapsible-header {
+    background-color: var(--light-color);
+    padding: 12px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.collapsible-header:hover {
+    background-color: #e0e6ea;
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #f9f9f9;
+    border-radius: 0 0 6px 6px;
+}
+
+.collapsible-content.expanded {
+    max-height: 1000px;
+    padding: 15px;
+}
+
+.collapsible-icon {
+    transition: transform 0.3s;
+}
+
+.collapsible-icon.expanded {
+    transform: rotate(180deg);
+}
+
+/* Gate table styles */
+.gate-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.gate-table th, .gate-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.gate-table th {
+    background-color: var(--light-color);
+    font-weight: 600;
+}
+
+.gate-table input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.gate-table .total-cell {
+    font-weight: 600;
+    background-color: #f0f8ff;
+}
+
+.gate-table .hidden-column {
+    display: none;
+}
+
+.add-gate-row {
+    background-color: var(--uae-green);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.remove-gate-row {
+    background-color: var(--uae-red);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
