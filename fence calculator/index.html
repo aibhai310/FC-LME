@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fence Installation Cost Calculator - AED</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Password Protection -->
+    <div id="password-protection">
+        <div class="password-box">
+            <h2>🔒 Protected Calculator</h2>
+            <p>This calculator is confidential. Please enter the password to continue.</p>
+            <input type="password" id="password-input" class="password-input" placeholder="Enter password">
+            <button onclick="checkPassword()" class="password-btn">Access Calculator</button>
+            <div id="error-message" class="error-message">Incorrect password. Please try again.</div>
+        </div>
+    </div>
+
+    <!-- Main Calculator Content -->
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Fence Cost Calculator</h1>
+                <p class="subtitle">Calculate the total cost of fence installation including multiple gate types</p>
+                <div class="currency-selector">
+                    <span class="aed-currency">Currency: AED </span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="app-container">
+            <section class="input-section">
+                <h2 class="section-title">Project Details</h2>
+                
+                <div class="form-group">
+                    <label for="distance">Distance (KM):</label>
+                    <input type="number" id="distance" value="0" step="0.1" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="rate">Rate per KM (AED):</label>
+                    <input type="number" id="rate" value="0" step="0.01" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="serviceType">Service Type:</label>
+                    <select id="serviceType">
+                        <option value="standard">Standard Installation</option>
+                        <option value="premium">Premium Installation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="installation" checked>
+                        <label for="installation">Include Installation?</label>
+                    </div>
+                </div>
+                
+                <h2 class="section-title">Post Details</h2>
+                
+                <div class="post-details">
+                    <div class="post-header">Post Specifications</div>
+                    
+                    <div class="post-row">
+                        <div class="post-input-group">
+                            <label for="postQty">Number of Posts:</label>
+                            <input type="number" id="postQty" value="0" min="1">
+                        </div>
+                        
+                        <div class="post-input-group">
+                            <label for="totalPostWeightInput">Total Post Weight (kg):</label>
+                            <input type="number" id="totalPostWeightInput" value="0" step="0.01" min="0">
+                        </div>
+                    </div>
+                    
+                    <div class="post-row">
+                        <div class="post-input-group">
+                            <label for="calculatedWeight">Calculated Weight per Post (kg):</label>
+                            <input type="number" id="calculatedWeight" value="0" step="0.01" min="0" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="post-summary">
+                        <div class="cost-item">
+                            <span class="cost-label">Weight per Post:</span>
+                            <span class="cost-value" id="displayWeightPerPost">0.00 kg</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gate Details - Collapsible -->
+                <div class="collapsible">
+                    <div class="collapsible-header" id="gateDetailsHeader">
+                        <span>Gate Details (Multiple Types)</span>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content" id="gateDetailsContent">
+                        <div class="form-group">
+                            <p>Add different gate types with their specifications:</p>
+                            
+                            <table class="gate-table">
+                                <thead>
+                                    <tr>
+                                        <th>Gate Type</th>
+                                        <th>Rate (AED)</th>
+                                        <th>Quantity</th>
+                                        <th>Weight (kg)</th>
+                                        <th class="hidden-column">Total Cost</th>
+                                        <th class="hidden-column">Total Weight</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="gateTableBody">
+                                    <!-- Gate rows will be added here -->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3"><strong>Gates Total:</strong></td>
+                                        <td class="total-cell" id="totalGatesWeight">0.00 kg</td>
+                                        <td class="hidden-column total-cell" id="totalGatesCost">AED 0.00</td>
+                                        <td class="hidden-column total-cell"></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            
+                            <button type="button" class="add-gate-row" onclick="addGateRow()">+ Add Gate Type</button>
+                            
+                            <div class="gate-types-info">
+                                <p><strong>Common Gate Types:</strong></p>
+                                <ul style="font-size: 0.9rem; margin-top: 10px; padding-left: 20px;">
+                                    <li><strong>DLS</strong> - Double Leaf Swing Gate</li>
+                                    <li><strong>SLS</strong> - Single Leaf Swing Gate</li>
+                                    <li><strong>SLE</strong> - Sliding Gate</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="calculateBtn" class="btn">Calculate Total Cost</button>
+                <button id="printBtn" class="btn btn-print no-print">Print Report</button>
+            </section>
+            
+            <section class="results-section">
+                <h2 class="section-title">Cost Breakdown</h2>
+                
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-label">Total Distance Cost</div>
+                        <div class="result-value" id="totalDistanceCost">AED 0.00</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-label">Total Gates Value</div>
+                        <div class="result-value" id="totalGatesValue">AED 0.00</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-label">Material Cost</div>
+                        <div class="result-value" id="materialCost">AED 0.00</div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-label">Installation Cost</div>
+                        <div class="result-value" id="installationCost">AED 0.00</div>
+                    </div>
+                    
+                    <!-- NEW: Gate Material Cost Box -->
+                    <div class="result-card" id="gateMaterialCostCard" style="display: none;">
+                        <div class="result-label">Gate Material Cost (70%)</div>
+                        <div class="result-value" id="gateMaterialCostValue">AED 0.00</div>
+                    </div>
+                    
+                    <!-- NEW: Gate Installation Cost Box -->
+                    <div class="result-card" id="gateInstallationCostCard" style="display: none;">
+                        <div class="result-label">Gate Installation Cost (30%)</div>
+                        <div class="result-value" id="gateInstallationCostValue">AED 0.00</div>
+                    </div>
+                </div>
+                
+                <!-- Material Cost Breakdown - Collapsible -->
+                <div class="collapsible">
+                    <div class="collapsible-header" id="materialBreakdownHeader">
+                        <span>Material Cost Breakdown</span>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content" id="materialBreakdownContent">
+                        <div class="cost-breakdown">
+                            <div class="cost-item">
+                                <span class="cost-label">Cost per KM (40%):</span>
+                                <span class="cost-value" id="costPerKm">AED 0.00</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">Cost per Linear Meter:</span>
+                                <span class="cost-value" id="costPerLM">AED 0.00</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">Cost per Post (60%):</span>
+                                <span class="cost-value" id="costPerPost">AED 0.00</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">Cost per Post (Individual):</span>
+                                <span class="cost-value" id="individualPostCost">AED 0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Weight Summary - Collapsible -->
+                <div class="collapsible">
+                    <div class="collapsible-header" id="weightSummaryHeader">
+                        <span>Weight Summary</span>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content" id="weightSummaryContent">
+                        <div class="post-details">
+                            <div class="cost-item">
+                                <span class="cost-label">Total Post Weight:</span>
+                                <span class="cost-value" id="displayTotalPostWeight">0.00 kg</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">Total Gate Weight:</span>
+                                <span class="cost-value" id="displayTotalGateWeight">0.00 kg</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">Total Weight (Posts + Gates):</span>
+                                <span class="cost-value" id="displayTotalWeight">0.00 kg</span>
+                            </div>
+                            <div class="cost-item">
+                                <span class="cost-label">Weight per Linear Meter:</span>
+                                <span class="cost-value" id="displayWeightPerLM">0.00 kg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gate Breakdown - Collapsible -->
+                <div class="collapsible">
+                    <div class="collapsible-header" id="gateBreakdownHeader">
+                        <span>Gate Breakdown Details</span>
+                        <span class="collapsible-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content" id="gateBreakdownContent">
+                        <table class="breakdown-table" id="gateBreakdownTable">
+                            <thead>
+                                <tr>
+                                    <th>Gate Type</th>
+                                    <th>Quantity</th>
+                                    <th>Rate (AED)</th>
+                                    <th>Weight (kg)</th>
+                                    <th>Total Cost</th>
+                                    <th>Total Weight</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gateBreakdownBody">
+                                <!-- Gate breakdown rows will be added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="breakdown-section">
+                    <h3 class="section-title">Detailed Breakdown</h3>
+                    
+                    <table class="breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Amount (AED)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Distance Cost (KM × Rate)</td>
+                                <td id="distanceCostDetail">AED 0.00</td>
+                            </tr>
+                            <tr>
+                                <td>Total Gates Value</td>
+                                <td id="gatesValueDetail">AED 0.00</td>
+                            </tr>
+                            <tr class="highlight">
+                                <td>Material Allocation (<span id="materialPercentage">70%</span>)</td>
+                                <td id="materialAllocation">AED 0.00</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;&nbsp;• For Fence (40%)</td>
+                                <td id="fenceCost">AED 0.00</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;Cost per Linear Meter</td>
+                                <td id="costPerLMDetail">AED 0.00</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;&nbsp;• For Posts (60%)</td>
+                                <td id="postCost">AED 0.00</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;&nbsp;&nbsp;&nbsp;Individual Post Cost</td>
+                                <td id="individualPostCostDetail">AED 0.00</td>
+                            </tr>
+                            
+                            <!-- NEW: Gate Material and Installation Breakdown -->
+                            <tr class="highlight" id="gateMaterialRow" style="display: none;">
+                                <td>Gate Material Cost (70%)</td>
+                                <td id="gateMaterialDetail">AED 0.00</td>
+                            </tr>
+                            <tr class="highlight" id="gateInstallationRow" style="display: none;">
+                                <td>Gate Installation Cost (30%)</td>
+                                <td id="gateInstallationDetail">AED 0.00</td>
+                            </tr>
+                            
+                            <tr class="highlight">
+                                <td>Installation Cost (<span id="installationPercentage">30%</span>)</td>
+                                <td id="installationCostDetail">AED 0.00</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>GRAND TOTAL</td>
+                                <td id="grandTotal">AED 0.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="note">Note: Installation costs are only applied when "Include Installation" is selected.</p>
+                </div>
+            </section>
+        </div>
+        
+        <div class="footer no-print">
+            <p>Fence Cost Calculator 2025 | Currency: AED</p>
+            <p>Made by Vijay Goral</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
